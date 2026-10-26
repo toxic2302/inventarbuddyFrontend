@@ -1,0 +1,48 @@
+<div class="mx-auto flex min-h-screen max-w-6xl flex-col gap-12 p-6">
+  <header class="flex items-center justify-between">
+    <div class="flex items-center gap-3 text-xl font-semibold text-primary">
+      <i class="pi pi-box"></i>
+      <span>InventarBuddy</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <app-language-switcher/>
+      @if (auth.authenticated) {
+        <p-button [label]="'landing.toApp' | translate" icon="pi pi-arrow-right" routerLink="/dashboard"/>
+      } @else {
+        <p-button [label]="'landing.login' | translate" icon="pi pi-sign-in" (onClick)="login()"/>
+      }
+    </div>
+  </header>
+
+  <section class="flex flex-col items-center gap-6 py-16 text-center">
+    <h1 class="m-0 text-4xl font-semibold md:text-5xl">{{ 'landing.heroTitle' | translate }}</h1>
+    <p class="m-0 max-w-2xl text-lg text-muted-color">{{ 'landing.heroText' | translate }}</p>
+    @if (auth.authenticated) {
+      <p-button
+        [label]="'landing.toApp' | translate"
+        icon="pi pi-arrow-right"
+        size="large"
+        routerLink="/dashboard"
+      />
+    } @else {
+      <p-button
+        [label]="'landing.loginNow' | translate"
+        icon="pi pi-sign-in"
+        size="large"
+        (onClick)="login()"
+      />
+    }
+  </section>
+
+  <section class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    @for (feature of features; track feature.key) {
+      <div class="flex flex-col gap-2 rounded-2xl bg-surface-0 p-6 shadow-sm dark:bg-surface-900">
+        <i [class]="feature.icon + ' mb-2 text-3xl text-primary'"></i>
+        <h3 class="m-0 text-lg font-semibold">{{ 'landing.features.' + feature.key + '.title' | translate }}</h3>
+        <p class="m-0 text-muted-color">{{ 'landing.features.' + feature.key + '.text' | translate }}</p>
+      </div>
+    }
+  </section>
+
+  <footer class="mt-auto py-4 text-center text-muted-color">© InventarBuddy 2026</footer>
+</div>

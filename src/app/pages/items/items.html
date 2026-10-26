@@ -1,0 +1,344 @@
+<div class="mb-4 flex items-center justify-between">
+  <h1 class="m-0 text-3xl font-semibold text-surface-900 dark:text-surface-0">{{ 'items.title' | translate }}</h1>
+  <p-button [label]="'common.new' | translate" icon="pi pi-plus" (onClick)="openCreate()"/>
+</div>
+
+@if (loading() && items().length === 0) {
+  <div class="flex flex-col gap-4" aria-busy="true">
+    <div class="flex flex-wrap items-center gap-3">
+      <p-skeleton class="block min-w-56 flex-1" height="2.5rem"/>
+      <p-skeleton class="block" width="10rem" height="2.5rem"/>
+      <p-skeleton class="ml-auto block" width="5.5rem" height="2.5rem"/>
+    </div>
+
+    @if (layout() === 'grid') {
+      <div class="grid grid-cols-12 gap-4">
+        @for (n of skeletonRows; track n) {
+          <div class="col-span-12 p-2 sm:col-span-6 xl:col-span-4 2xl:col-span-3">
+            <div
+              class="flex h-full flex-col gap-5 rounded-border border border-surface-200 bg-surface-0 p-5 dark:border-surface-700 dark:bg-surface-900">
+              <p-skeleton class="block" width="100%" height="10rem"/>
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex flex-1 flex-col gap-2">
+                  <p-skeleton class="block" width="35%" height="0.875rem"/>
+                  <p-skeleton class="block" width="75%" height="1.25rem"/>
+                  <p-skeleton class="block" width="55%" height="0.875rem"/>
+                </div>
+                <p-skeleton width="3.5rem" height="1.75rem" borderRadius="30px"/>
+              </div>
+              <p-skeleton class="block" width="40%" height="1.25rem"/>
+              <div class="flex gap-2">
+                <p-skeleton class="block flex-auto" height="2.5rem"/>
+                <p-skeleton width="2.5rem" height="2.5rem"/>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="rounded-border border border-surface-200 dark:border-surface-700">
+        @for (n of skeletonRows; track n; let first = $first) {
+          <div
+            class="flex flex-col gap-4 p-5 sm:flex-row sm:items-center"
+            [class]="first ? '' : 'border-t border-surface-200 dark:border-surface-700'"
+          >
+            <p-skeleton class="block md:w-40" width="100%" height="6.5rem"/>
+            <div class="flex flex-1 flex-col justify-between gap-5 md:flex-row md:items-center">
+              <div class="flex flex-1 flex-col gap-2">
+                <p-skeleton class="block" width="10rem" height="0.875rem"/>
+                <p-skeleton class="block" width="16rem" height="1.25rem"/>
+                <p-skeleton class="block" width="12rem" height="0.875rem"/>
+              </div>
+              <div class="flex flex-col gap-5 md:items-end">
+                <p-skeleton class="block" width="8rem" height="1.5rem"/>
+                <div class="flex gap-2">
+                  <p-skeleton width="6rem" height="2.5rem"/>
+                  <p-skeleton width="2.5rem" height="2.5rem"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+} @else {
+  <p-dataview
+    [value]="visibleItems()"
+    [loading]="loading()"
+    [layout]="layout()"
+    [paginator]="true"
+    [rows]="12"
+    [rowsPerPageOptions]="[12, 24, 48]"
+  >
+    <ng-template #header>
+      <div class="flex flex-wrap items-center gap-3">
+        <input
+          pInputText
+          class="min-w-56 flex-1"
+          type="text"
+          [placeholder]="'items.searchPlaceholder' | translate"
+          [ngModel]="search()"
+          (ngModelChange)="search.set($event)"
+        />
+        <p-select
+          [options]="sortOptions()"
+          optionLabel="label"
+          optionValue="value"
+          [ngModel]="sort()"
+          (ngModelChange)="sort.set($event)"
+          appendTo="body"
+        />
+        <p-selectbutton
+          class="ml-auto"
+          [options]="layoutOptions"
+          [ngModel]="layout()"
+          (ngModelChange)="layout.set($event ?? 'grid')"
+          optionLabel="icon"
+          optionValue="value"
+          [allowEmpty]="false"
+        >
+          <ng-template #item let-option>
+            <i [class]="option.icon"></i>
+          </ng-template>
+        </p-selectbutton>
+      </div>
+    </ng-template>
+
+    <ng-template #list let-items>
+      @for (item of items; track item.id; let first = $first) {
+        <div>
+          <div
+            class="flex flex-col gap-4 p-5 sm:flex-row sm:items-center"
+            [class]="first ? '' : 'border-t border-surface-200 dark:border-surface-700'"
+          >
+            <div class="relative md:w-40">
+              <div
+                class="mx-auto flex aspect-3/2 w-full items-center justify-center overflow-hidden rounded-border bg-surface-50 dark:bg-surface-800">
+                <app-media-thumbnail [media]="item.media" [alt]="item.name"/>
+              </div>
+              <p-tag
+                class="absolute top-1 left-1 dark:bg-surface-900!"
+                [value]="(item.sold ? 'items.sold' : 'items.available') | translate"
+                [severity]="item.sold ? 'secondary' : 'success'"
+              />
+            </div>
+            <div class="flex flex-1 flex-col justify-between gap-5 md:flex-row md:items-center">
+              <div class="flex min-w-0 flex-row items-start justify-between gap-2 md:flex-col">
+                <div class="min-w-0">
+                  <span
+                    class="text-sm font-medium text-surface-500 dark:text-surface-400">{{ categoryName(item.categoryId) || ('items.noCategory' | translate) }}</span>
+                  <div class="mt-1 font-medium text-surface-900 dark:text-surface-0">{{ item.name }}</div>
+                  @if (itemSubtitle(item)) {
+                    <div class="mt-1 text-sm text-surface-500 dark:text-surface-400">{{ itemSubtitle(item) }}</div>
+                  }
+                  @if (item.description) {
+                    <div class="mt-2 line-clamp-2 text-surface-600 dark:text-surface-300">{{ item.description }}</div>
+                  }
+                </div>
+                <div class="rounded-[30px] bg-surface-100 p-1 dark:bg-surface-700">
+                  <div
+                    class="flex items-center justify-center gap-2 rounded-[30px] bg-surface-0 px-1.5 py-0.5 shadow-sm dark:bg-surface-900">
+                    <span class="text-xs font-medium text-surface-900 dark:text-surface-0">{{ item.quantity }}×</span>
+                    <i class="pi pi-box text-primary"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col gap-7 md:items-end">
+                @if (storageName(item.storageId)) {
+                  <span class="text-lg font-semibold text-surface-900 dark:text-surface-0">
+                    <i class="pi pi-warehouse"></i> {{ storageName(item.storageId) }}
+                  </span>
+                } @else {
+                  <span class="text-lg font-semibold text-surface-500 dark:text-surface-400">–</span>
+                }
+                <div class="flex flex-row-reverse gap-2 md:flex-row">
+                  <p-button icon="pi pi-trash" severity="danger" [outlined]="true" (onClick)="remove(item)"/>
+                  <p-button
+                    class="flex-auto md:flex-initial"
+                    styleClass="w-full whitespace-nowrap"
+                    icon="pi pi-pencil"
+                    [label]="'common.edit' | translate"
+                    (onClick)="openEdit(item)"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </ng-template>
+
+    <ng-template #grid let-items>
+      <div class="grid grid-cols-12 gap-4">
+        @for (item of items; track item.id) {
+          <div class="col-span-12 p-2 sm:col-span-6 xl:col-span-4 2xl:col-span-3">
+            <div
+              class="flex h-full flex-col rounded-border border border-surface-200 bg-surface-0 p-5 dark:border-surface-700 dark:bg-surface-900">
+              <div class="flex justify-center rounded-border bg-surface-50 p-4 dark:bg-surface-800">
+                <div class="relative mx-auto w-full max-w-[300px]">
+                  <div class="flex aspect-3/2 w-full items-center justify-center overflow-hidden rounded-border">
+                    <app-media-thumbnail [media]="item.media" [alt]="item.name"/>
+                  </div>
+                  <p-tag
+                    class="absolute top-1 left-1 dark:bg-surface-900!"
+                    [value]="(item.sold ? 'items.sold' : 'items.available') | translate"
+                    [severity]="item.sold ? 'secondary' : 'success'"
+                  />
+                </div>
+              </div>
+              <div class="flex flex-1 flex-col pt-5">
+                <div class="flex flex-row items-start justify-between gap-2">
+                  <div class="min-w-0">
+                    <span
+                      class="text-sm font-medium text-surface-500 dark:text-surface-400">{{ categoryName(item.categoryId) || ('items.noCategory' | translate) }}</span>
+                    <div class="mt-1 font-medium text-surface-900 dark:text-surface-0">{{ item.name }}</div>
+                    @if (itemSubtitle(item)) {
+                      <div class="mt-1 text-sm text-surface-500 dark:text-surface-400">{{ itemSubtitle(item) }}</div>
+                    }
+                  </div>
+                  <div class="shrink-0 rounded-[30px] bg-surface-100 p-1 dark:bg-surface-700">
+                    <div
+                      class="flex items-center justify-center gap-2 rounded-[30px] bg-surface-0 px-1.5 py-0.5 shadow-sm dark:bg-surface-900">
+                      <span class="text-sm font-medium text-surface-900 dark:text-surface-0">{{ item.quantity }}×</span>
+                      <i class="pi pi-box text-primary"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-auto flex flex-col gap-5 pt-5">
+                  @if (storageName(item.storageId)) {
+                    <span class="font-semibold text-surface-900 dark:text-surface-0">
+                      <i class="pi pi-warehouse"></i> {{ storageName(item.storageId) }}
+                    </span>
+                  } @else {
+                    <span class="font-semibold text-surface-500 dark:text-surface-400">–</span>
+                  }
+                  <div class="flex gap-2">
+                    <p-button
+                      class="flex-auto"
+                      styleClass="w-full whitespace-nowrap"
+                      icon="pi pi-pencil"
+                      [label]="'common.edit' | translate"
+                      (onClick)="openEdit(item)"
+                    />
+                    <p-button icon="pi pi-trash" severity="danger" [outlined]="true" (onClick)="remove(item)"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </ng-template>
+
+    <ng-template #emptymessage>
+      <p class="m-0 p-6 text-muted-color">{{ 'items.empty' | translate }}</p>
+    </ng-template>
+  </p-dataview>
+}
+
+<p-dialog
+  [header]="(editing() ? 'items.editTitle' : 'items.createTitle') | translate"
+  [visible]="dialogVisible()"
+  (visibleChange)="dialogVisible.set($event)"
+  [modal]="true"
+  [style]="{ width: '36rem' }"
+>
+  <form class="flex flex-col gap-4" [formGroup]="form" (ngSubmit)="save()">
+    <div class="flex flex-col gap-1.5">
+      <label for="name">{{ 'common.nameRequired' | translate }}</label>
+      <input pInputText id="name" formControlName="name" maxlength="255"/>
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label for="description">{{ 'common.description' | translate }}</label>
+      <textarea pTextarea id="description" formControlName="description" rows="3" maxlength="1000"></textarea>
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label for="manufacturer">{{ 'items.manufacturer' | translate }}</label>
+      <input pInputText id="manufacturer" formControlName="manufacturer" maxlength="255"/>
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label for="modelNumber">{{ 'items.modelNumber' | translate }}</label>
+      <input pInputText id="modelNumber" formControlName="modelNumber" maxlength="255"/>
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label for="serialNumber">{{ 'items.serialNumber' | translate }}</label>
+      <input pInputText id="serialNumber" formControlName="serialNumber" maxlength="255"/>
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label for="quantity">{{ 'items.quantity' | translate }}</label>
+      <p-inputnumber inputId="quantity" formControlName="quantity" [min]="0" [showButtons]="true"/>
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label for="category">{{ 'items.category' | translate }}</label>
+      <p-select
+        inputId="category"
+        formControlName="categoryId"
+        [options]="categories()"
+        optionLabel="label"
+        optionValue="id"
+        [showClear]="true"
+        [filter]="true"
+        [placeholder]="'items.categoryPlaceholder' | translate"
+        appendTo="body"
+      />
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label for="storage">{{ 'items.storage' | translate }}</label>
+      <p-select
+        inputId="storage"
+        formControlName="storageId"
+        [options]="storages()"
+        optionLabel="label"
+        optionValue="id"
+        [showClear]="true"
+        [filter]="true"
+        [placeholder]="'items.storagePlaceholder' | translate"
+        appendTo="body"
+      />
+    </div>
+    <div class="flex items-center gap-2">
+      <p-checkbox inputId="sold" formControlName="sold" [binary]="true"/>
+      <label for="sold">{{ 'items.soldLabel' | translate }}</label>
+    </div>
+  </form>
+
+  @if (editing(); as item) {
+    <div class="mt-4 flex flex-col gap-2">
+      <h3 class="m-0 text-base font-semibold">{{ 'items.files' | translate }}</h3>
+      @for (m of item.media ?? []; track m.id) {
+        <div class="flex items-center gap-2">
+          <i [class]="m.contentType === 'application/pdf' ? 'pi pi-file-pdf' : 'pi pi-image'"></i>
+          <span class="flex-1 truncate">{{ m.fileName }}</span>
+          <p-button icon="pi pi-external-link" [text]="true" [rounded]="true" (onClick)="openMedia(m)"/>
+          <p-button
+            icon="pi pi-trash"
+            severity="danger"
+            [text]="true"
+            [rounded]="true"
+            (onClick)="removeMedia(m)"
+          />
+        </div>
+      } @empty {
+        <p class="m-0 text-muted-color">{{ 'items.noFiles' | translate }}</p>
+      }
+      <p-fileupload
+        mode="basic"
+        [chooseLabel]="'common.uploadFile' | translate"
+        chooseIcon="pi pi-upload"
+        accept="image/*,application/pdf"
+        [customUpload]="true"
+        [auto]="true"
+        (uploadHandler)="uploadMedia($event)"
+      />
+    </div>
+  } @else {
+    <p class="m-0 text-muted-color">{{ 'items.filesAfterSave' | translate }}</p>
+  }
+
+  <ng-template #footer>
+    <p-button [label]="'common.cancel' | translate" severity="secondary" [text]="true"
+              (onClick)="dialogVisible.set(false)"/>
+    <p-button [label]="'common.save' | translate" icon="pi pi-check" (onClick)="save()"/>
+  </ng-template>
+</p-dialog>
