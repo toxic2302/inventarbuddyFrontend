@@ -1,0 +1,50 @@
+<div class="landing">
+  <header class="topbar">
+    <div class="brand">
+      <i class="pi pi-box"></i>
+      <span>InventarBuddy</span>
+    </div>
+    <div class="topbar-actions">
+      <app-language-switcher />
+      @if (auth.authenticated) {
+        <p-button [label]="'landing.toApp' | translate" icon="pi pi-arrow-right" routerLink="/items" />
+      } @else {
+        <p-button [label]="'landing.login' | translate" icon="pi pi-sign-in" (onClick)="login()" />
+      }
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>{{ 'landing.heroTitle' | translate }}</h1>
+    <p>{{ 'landing.heroText' | translate }}</p>
+    @if (auth.authenticated) {
+      <p-button
+        [label]="'landing.toApp' | translate"
+        icon="pi pi-arrow-right"
+        size="large"
+        routerLink="/dashboard"
+      />
+    } @else {
+      <p-button
+        [label]="'landing.loginNow' | translate"
+        icon="pi pi-sign-in"
+        size="large"
+        (onClick)="login()"
+      />
+    }
+  </section>
+
+  <section class="features">
+    @for (feature of features; track feature.key) {
+      <p-card>
+        <ng-template #header>
+          <i [class]="feature.icon + ' feature-icon'"></i>
+        </ng-template>
+        <h3>{{ 'landing.features.' + feature.key + '.title' | translate }}</h3>
+        <p>{{ 'landing.features.' + feature.key + '.text' | translate }}</p>
+      </p-card>
+    }
+  </section>
+
+  <footer class="footer">© InventarBuddy 2026</footer>
+</div>

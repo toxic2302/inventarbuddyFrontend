@@ -1,0 +1,168 @@
+{
+  "common": {
+    "new": "New",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "success": "Success",
+    "error": "Error",
+    "saved": "Saved",
+    "deleted": "Deleted",
+    "uploaded": "File uploaded",
+    "loadFailed": "Data could not be loaded",
+    "saveFailed": "Saving failed",
+    "deleteFailed": "Deleting failed",
+    "uploadFailed": "Upload failed",
+    "confirmDelete": "Really delete “{{name}}”?",
+    "name": "Name",
+    "nameRequired": "Name *",
+    "description": "Description",
+    "uploadFile": "Upload file"
+  },
+  "nav": {
+    "inventory": "Inventory",
+    "items": "Items",
+    "categories": "Categories",
+    "storages": "Storage locations",
+    "media": "Media",
+    "logout": "Sign out",
+    "editProfile": "Edit profile",
+    "language": "Language",
+    "dashboard": "Dashboard"
+  },
+  "language": {
+    "en": "English",
+    "de": "German"
+  },
+  "landing": {
+    "login": "Sign in",
+    "loginNow": "Sign in now",
+    "toApp": "Go to app",
+    "heroTitle": "Keep track of your inventory",
+    "heroText": "InventarBuddy helps you manage items, categories, storage locations and related documents in one place.",
+    "features": {
+      "items": {
+        "title": "Items",
+        "text": "Record your things with serial number, model, manufacturer and quantity."
+      },
+      "categories": {
+        "title": "Categories",
+        "text": "Organize your stock in arbitrarily nested categories."
+      },
+      "storages": {
+        "title": "Storage locations",
+        "text": "Keep track of where each item is located."
+      },
+      "media": {
+        "title": "Media",
+        "text": "Attach photos and PDFs such as invoices or manuals."
+      }
+    }
+  },
+  "items": {
+    "title": "Items",
+    "searchPlaceholder": "Search…",
+    "sold": "Sold",
+    "available": "Available",
+    "noCategory": "No category",
+    "empty": "No items available.",
+    "createTitle": "Create item",
+    "editTitle": "Edit item",
+    "manufacturer": "Manufacturer",
+    "modelNumber": "Model number",
+    "serialNumber": "Serial number",
+    "quantity": "Quantity",
+    "category": "Category",
+    "storage": "Storage location",
+    "categoryPlaceholder": "None",
+    "storagePlaceholder": "None",
+    "soldLabel": "Sold",
+    "files": "Files",
+    "noFiles": "No files available.",
+    "filesAfterSave": "Files can be added after the first save.",
+    "serialShort": "SN {{value}}",
+    "sort": {
+      "name": "Name",
+      "manufacturer": "Manufacturer",
+      "model": "Model",
+      "serial": "Serial no.",
+      "quantity": "Quantity"
+    }
+  },
+  "tree": {
+    "empty": "No entries available.",
+    "createChild": "Create child entry",
+    "createTitle": "Create new",
+    "editTitle": "Edit",
+    "parent": "Parent",
+    "parentPlaceholder": "None (top level)"
+  },
+  "categories": {
+    "title": "Categories"
+  },
+  "storages": {
+    "title": "Storage locations"
+  },
+  "media": {
+    "title": "Media",
+    "fileName": "File name",
+    "fileNameRequired": "File name *",
+    "type": "Type",
+    "size": "Size",
+    "item": "Item",
+    "itemPlaceholder": "None",
+    "empty": "No media available.",
+    "editTitle": "Edit media"
+  },
+  "profile": {
+    "title": "My profile",
+    "username": "Username",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "changePassword": "Change password",
+    "saved": "Profile saved",
+    "loadFailed": "Profile could not be loaded",
+    "saveFailed": "Profile could not be saved"
+  },
+  "primeng": {
+    "accept": "Yes",
+    "reject": "No",
+    "choose": "Choose",
+    "upload": "Upload",
+    "cancel": "Cancel",
+    "clear": "Clear",
+    "apply": "Apply",
+    "emptyMessage": "No results found",
+    "emptyFilterMessage": "No results found",
+    "searchMessage": "{0} results are available",
+    "selectionMessage": "{0} items selected",
+    "emptySelectionMessage": "No selected item",
+    "emptySearchMessage": "No results found",
+    "fileChosenMessage": "{0} files",
+    "noFileChosenMessage": "No file chosen"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back, {{name}}!",
+    "topLevel": "{{count}} top level",
+    "items": {
+      "label": "Items",
+      "available": "{{count}} available",
+      "sold": "{{count}} sold",
+      "quantity": "{{count}} pcs. in total"
+    },
+    "categories": {
+      "label": "Categories"
+    },
+    "storages": {
+      "label": "Storage locations"
+    },
+    "media": {
+      "label": "Media",
+      "images": "{{count}} images",
+      "pdfs": "{{count}} PDFs"
+    }
+  }
+}

@@ -1,0 +1,70 @@
+<div class="dashboard">
+  <header class="dashboard-header">
+    <h1>{{ 'dashboard.title' | translate }}</h1>
+    @if (auth.username) {
+      <p>{{ 'dashboard.welcome' | translate: { name: auth.username } }}</p>
+    }
+  </header>
+
+  <div class="stat-grid">
+    <a class="stat-card" routerLink="/items">
+      <div class="stat-head">
+        <div class="stat-text">
+          <span class="stat-label">{{ 'dashboard.items.label' | translate }}</span>
+          <span class="stat-value">{{ stats().items.value ?? '–' }}</span>
+        </div>
+        <div class="stat-icon stat-icon-cyan"><i class="pi pi-box"></i></div>
+      </div>
+      <div class="stat-foot">
+        <span class="stat-strong">{{ 'dashboard.items.available' | translate: { count: stats().items.available } }}</span>
+        <span class="stat-muted">
+          · {{ 'dashboard.items.sold' | translate: { count: stats().items.sold } }} ·
+          {{ 'dashboard.items.quantity' | translate: { count: stats().items.quantity } }}
+        </span>
+      </div>
+    </a>
+
+    <a class="stat-card" routerLink="/categories">
+      <div class="stat-head">
+        <div class="stat-text">
+          <span class="stat-label">{{ 'dashboard.categories.label' | translate }}</span>
+          <span class="stat-value">{{ stats().categories.value ?? '–' }}</span>
+        </div>
+        <div class="stat-icon stat-icon-orange"><i class="pi pi-tags"></i></div>
+      </div>
+      <div class="stat-foot">
+        <span class="stat-strong">{{ 'dashboard.topLevel' | translate: { count: stats().categories.topLevel } }}</span>
+      </div>
+    </a>
+
+    <a class="stat-card" routerLink="/storages">
+      <div class="stat-head">
+        <div class="stat-text">
+          <span class="stat-label">{{ 'dashboard.storages.label' | translate }}</span>
+          <span class="stat-value">{{ stats().storages.value ?? '–' }}</span>
+        </div>
+        <div class="stat-icon stat-icon-slate"><i class="pi pi-warehouse"></i></div>
+      </div>
+      <div class="stat-foot">
+        <span class="stat-strong">{{ 'dashboard.topLevel' | translate: { count: stats().storages.topLevel } }}</span>
+      </div>
+    </a>
+
+    <a class="stat-card" routerLink="/media">
+      <div class="stat-head">
+        <div class="stat-text">
+          <span class="stat-label">{{ 'dashboard.media.label' | translate }}</span>
+          <span class="stat-value">{{ stats().media.value ?? '–' }}</span>
+        </div>
+        <div class="stat-icon stat-icon-violet"><i class="pi pi-images"></i></div>
+      </div>
+      <div class="stat-foot">
+        <span class="stat-strong">{{ stats().media.size }}</span>
+        <span class="stat-muted">
+          · {{ 'dashboard.media.images' | translate: { count: stats().media.images } }} ·
+          {{ 'dashboard.media.pdfs' | translate: { count: stats().media.pdfs } }}
+        </span>
+      </div>
+    </a>
+  </div>
+</div>

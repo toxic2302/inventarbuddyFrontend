@@ -1,0 +1,229 @@
+<div class="page-header">
+  <h1>{{ 'items.title' | translate }}</h1>
+  <p-button [label]="'common.new' | translate" icon="pi pi-plus" (onClick)="openCreate()" />
+</div>
+
+<p-dataview
+  [value]="visibleItems()"
+  [loading]="loading()"
+  [layout]="layout()"
+  [paginator]="true"
+  [rows]="12"
+  [rowsPerPageOptions]="[12, 24, 48]"
+  gridStyleClass="items-grid"
+>
+  <ng-template #header>
+    <div class="dataview-toolbar">
+      <input
+        pInputText
+        type="text"
+        [placeholder]="'items.searchPlaceholder' | translate"
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event)"
+      />
+      <p-select
+        [options]="sortOptions()"
+        optionLabel="label"
+        optionValue="value"
+        [ngModel]="sort()"
+        (ngModelChange)="sort.set($event)"
+        appendTo="body"
+      />
+      <p-selectbutton
+        class="layout-toggle"
+        [options]="layoutOptions"
+        [ngModel]="layout()"
+        (ngModelChange)="layout.set($event ?? 'grid')"
+        optionLabel="icon"
+        optionValue="value"
+        [allowEmpty]="false"
+      >
+        <ng-template #item let-option>
+          <i [class]="option.icon"></i>
+        </ng-template>
+      </p-selectbutton>
+    </div>
+  </ng-template>
+
+  <ng-template #list let-items>
+    @for (item of items; track item.id; let first = $first) {
+      <div class="item-row" [class.item-row-divider]="!first">
+        <div class="item-image">
+          <app-media-thumbnail [media]="item.media" [alt]="item.name" />
+          <p-tag
+            class="item-status"
+            [value]="(item.sold ? 'items.sold' : 'items.available') | translate"
+            [severity]="item.sold ? 'secondary' : 'success'"
+          />
+        </div>
+        <div class="item-content">
+          <div class="item-info">
+            <span class="item-category">{{ categoryName(item.categoryId) || ('items.noCategory' | translate) }}</span>
+            <div class="item-name">{{ item.name }}</div>
+            @if (itemSubtitle(item)) {
+              <div class="item-subtitle">{{ itemSubtitle(item) }}</div>
+            }
+            @if (item.description) {
+              <div class="item-description">{{ item.description }}</div>
+            }
+          </div>
+          <div class="item-side">
+            <div class="item-quantity">{{ item.quantity }}×</div>
+            @if (storageName(item.storageId)) {
+              <span class="item-storage"><i class="pi pi-warehouse"></i> {{ storageName(item.storageId) }}</span>
+            }
+            <div class="item-actions">
+              <p-button icon="pi pi-pencil" [label]="'common.edit' | translate" (onClick)="openEdit(item)" />
+              <p-button icon="pi pi-trash" severity="danger" [outlined]="true" (onClick)="remove(item)" />
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </ng-template>
+
+  <ng-template #grid let-items>
+    @for (item of items; track item.id) {
+      <div class="item-card">
+        <div class="item-card-body">
+          <div class="item-image item-image-card">
+            <app-media-thumbnail [media]="item.media" [alt]="item.name" />
+            <p-tag
+              class="item-status"
+              [value]="(item.sold ? 'items.sold' : 'items.available') | translate"
+              [severity]="item.sold ? 'secondary' : 'success'"
+            />
+          </div>
+          <div class="item-card-info">
+            <div>
+              <span class="item-category">{{ categoryName(item.categoryId) || ('items.noCategory' | translate) }}</span>
+              <div class="item-name">{{ item.name }}</div>
+              @if (itemSubtitle(item)) {
+                <div class="item-subtitle">{{ itemSubtitle(item) }}</div>
+              }
+            </div>
+            @if (storageName(item.storageId)) {
+              <span class="item-storage"><i class="pi pi-warehouse"></i> {{ storageName(item.storageId) }}</span>
+            }
+          </div>
+          <div class="item-card-footer">
+            <span class="item-quantity">{{ item.quantity }}×</span>
+            <div class="item-actions">
+              <p-button icon="pi pi-pencil" [label]="'common.edit' | translate" (onClick)="openEdit(item)" />
+              <p-button icon="pi pi-trash" severity="danger" [outlined]="true" (onClick)="remove(item)" />
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </ng-template>
+
+  <ng-template #emptymessage>
+    <p class="muted empty-message">{{ 'items.empty' | translate }}</p>
+  </ng-template>
+</p-dataview>
+
+<p-dialog
+  [header]="(editing() ? 'items.editTitle' : 'items.createTitle') | translate"
+  [visible]="dialogVisible()"
+  (visibleChange)="dialogVisible.set($event)"
+  [modal]="true"
+  [style]="{ width: '36rem' }"
+>
+  <form class="form-grid" [formGroup]="form" (ngSubmit)="save()">
+    <div class="field">
+      <label for="name">{{ 'common.nameRequired' | translate }}</label>
+      <input pInputText id="name" formControlName="name" maxlength="255" />
+    </div>
+    <div class="field">
+      <label for="description">{{ 'common.description' | translate }}</label>
+      <textarea pTextarea id="description" formControlName="description" rows="3" maxlength="1000"></textarea>
+    </div>
+    <div class="field">
+      <label for="manufacturer">{{ 'items.manufacturer' | translate }}</label>
+      <input pInputText id="manufacturer" formControlName="manufacturer" maxlength="255" />
+    </div>
+    <div class="field">
+      <label for="modelNumber">{{ 'items.modelNumber' | translate }}</label>
+      <input pInputText id="modelNumber" formControlName="modelNumber" maxlength="255" />
+    </div>
+    <div class="field">
+      <label for="serialNumber">{{ 'items.serialNumber' | translate }}</label>
+      <input pInputText id="serialNumber" formControlName="serialNumber" maxlength="255" />
+    </div>
+    <div class="field">
+      <label for="quantity">{{ 'items.quantity' | translate }}</label>
+      <p-inputnumber inputId="quantity" formControlName="quantity" [min]="0" [showButtons]="true" />
+    </div>
+    <div class="field">
+      <label for="category">{{ 'items.category' | translate }}</label>
+      <p-select
+        inputId="category"
+        formControlName="categoryId"
+        [options]="categories()"
+        optionLabel="label"
+        optionValue="id"
+        [showClear]="true"
+        [filter]="true"
+        [placeholder]="'items.categoryPlaceholder' | translate"
+        appendTo="body"
+      />
+    </div>
+    <div class="field">
+      <label for="storage">{{ 'items.storage' | translate }}</label>
+      <p-select
+        inputId="storage"
+        formControlName="storageId"
+        [options]="storages()"
+        optionLabel="label"
+        optionValue="id"
+        [showClear]="true"
+        [filter]="true"
+        [placeholder]="'items.storagePlaceholder' | translate"
+        appendTo="body"
+      />
+    </div>
+    <div class="field checkbox">
+      <p-checkbox inputId="sold" formControlName="sold" [binary]="true" />
+      <label for="sold">{{ 'items.soldLabel' | translate }}</label>
+    </div>
+  </form>
+
+  @if (editing(); as item) {
+    <div class="media-section">
+      <h3>{{ 'items.files' | translate }}</h3>
+      @for (m of item.media ?? []; track m.id) {
+        <div class="media-row">
+          <i [class]="m.contentType === 'application/pdf' ? 'pi pi-file-pdf' : 'pi pi-image'"></i>
+          <span class="media-name">{{ m.fileName }}</span>
+          <p-button icon="pi pi-external-link" [text]="true" [rounded]="true" (onClick)="openMedia(m)" />
+          <p-button
+            icon="pi pi-trash"
+            severity="danger"
+            [text]="true"
+            [rounded]="true"
+            (onClick)="removeMedia(m)"
+          />
+        </div>
+      } @empty {
+        <p class="muted">{{ 'items.noFiles' | translate }}</p>
+      }
+      <p-fileupload
+        mode="basic"
+        [chooseLabel]="'common.uploadFile' | translate"
+        chooseIcon="pi pi-upload"
+        accept="image/*,application/pdf"
+        [customUpload]="true"
+        [auto]="true"
+        (uploadHandler)="uploadMedia($event)"
+      />
+    </div>
+  } @else {
+    <p class="muted">{{ 'items.filesAfterSave' | translate }}</p>
+  }
+
+  <ng-template #footer>
+    <p-button [label]="'common.cancel' | translate" severity="secondary" [text]="true" (onClick)="dialogVisible.set(false)" />
+    <p-button [label]="'common.save' | translate" icon="pi pi-check" (onClick)="save()" />
+  </ng-template>
+</p-dialog>

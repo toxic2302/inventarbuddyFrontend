@@ -1,0 +1,90 @@
+<div class="page-header">
+  <h1>{{ 'media.title' | translate }}</h1>
+  <p-fileupload
+    mode="basic"
+    [chooseLabel]="'common.uploadFile' | translate"
+    chooseIcon="pi pi-upload"
+    accept="image/*,application/pdf"
+    [customUpload]="true"
+    [auto]="true"
+    (uploadHandler)="upload($event)"
+  />
+</div>
+
+<p-table
+  [value]="media()"
+  [loading]="loading()"
+  [paginator]="true"
+  [rows]="10"
+  dataKey="id"
+  [tableStyle]="{ 'min-width': '40rem' }"
+>
+  <ng-template #header>
+    <tr>
+      <th pSortableColumn="fileName">{{ 'media.fileName' | translate }} <p-sorticon field="fileName" /></th>
+      <th>{{ 'media.type' | translate }}</th>
+      <th pSortableColumn="fileSize">{{ 'media.size' | translate }} <p-sorticon field="fileSize" /></th>
+      <th>{{ 'media.item' | translate }}</th>
+      <th style="width: 10rem"></th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-m>
+    <tr>
+      <td>{{ m.fileName }}</td>
+      <td>{{ m.contentType }}</td>
+      <td>{{ size(m.fileSize) }}</td>
+      <td>{{ itemName(m.itemId) }}</td>
+      <td>
+        <div class="row-actions">
+          <p-button icon="pi pi-external-link" [rounded]="true" [text]="true" (onClick)="open(m)" />
+          <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="openEdit(m)" />
+          <p-button
+            icon="pi pi-trash"
+            severity="danger"
+            [rounded]="true"
+            [text]="true"
+            (onClick)="remove(m)"
+          />
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="5">{{ 'media.empty' | translate }}</td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog
+  [header]="'media.editTitle' | translate"
+  [visible]="dialogVisible()"
+  (visibleChange)="dialogVisible.set($event)"
+  [modal]="true"
+  [style]="{ width: '30rem' }"
+>
+  <div class="form-grid">
+    <div class="field">
+      <label for="fileName">{{ 'media.fileNameRequired' | translate }}</label>
+      <input pInputText id="fileName" [(ngModel)]="fileName" maxlength="255" />
+    </div>
+    <div class="field">
+      <label for="item">{{ 'media.item' | translate }}</label>
+      <p-select
+        inputId="item"
+        [(ngModel)]="itemId"
+        [options]="items()"
+        optionLabel="name"
+        optionValue="id"
+        [showClear]="true"
+        [filter]="true"
+        [placeholder]="'media.itemPlaceholder' | translate"
+        appendTo="body"
+      />
+    </div>
+  </div>
+  <ng-template #footer>
+    <p-button [label]="'common.cancel' | translate" severity="secondary" [text]="true" (onClick)="dialogVisible.set(false)" />
+    <p-button [label]="'common.save' | translate" icon="pi pi-check" (onClick)="save()" />
+  </ng-template>
+</p-dialog>

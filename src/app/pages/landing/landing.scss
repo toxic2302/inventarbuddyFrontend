@@ -1,0 +1,80 @@
+.landing {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  min-height: 100vh;
+  padding: 1.5rem;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--p-primary-color);
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 4rem 0;
+  text-align: center;
+
+  h1 {
+    margin: 0;
+    font-size: 2.75rem;
+  }
+
+  p {
+    margin: 0;
+    max-width: 40rem;
+    font-size: 1.15rem;
+    color: var(--p-text-muted-color);
+  }
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.5rem;
+
+  h3 {
+    margin: 0 0 0.5rem;
+  }
+
+  p {
+    margin: 0;
+    color: var(--p-text-muted-color);
+  }
+}
+
+.feature-icon {
+  display: block;
+  padding: 1.5rem 1.5rem 0;
+  font-size: 2rem;
+  color: var(--p-primary-color);
+}
+
+.footer {
+  margin-top: auto;
+  padding: 1rem 0;
+  text-align: center;
+  color: var(--p-text-muted-color);
+}

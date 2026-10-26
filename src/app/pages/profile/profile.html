@@ -1,0 +1,42 @@
+<div class="page-header">
+  <h1>{{ 'profile.title' | translate }}</h1>
+</div>
+
+<p-card>
+  <form class="form-grid profile-form" (ngSubmit)="save()">
+    <div class="field">
+      <label for="username">{{ 'profile.username' | translate }}</label>
+      <input pInputText id="username" name="username" [(ngModel)]="profile.username" [disabled]="loading()" />
+    </div>
+    <div class="field">
+      <label for="firstName">{{ 'profile.firstName' | translate }}</label>
+      <input pInputText id="firstName" name="firstName" [(ngModel)]="profile.firstName" [disabled]="loading()" />
+    </div>
+    <div class="field">
+      <label for="lastName">{{ 'profile.lastName' | translate }}</label>
+      <input pInputText id="lastName" name="lastName" [(ngModel)]="profile.lastName" [disabled]="loading()" />
+    </div>
+    <div class="field">
+      <label for="email">{{ 'profile.email' | translate }}</label>
+      <input pInputText id="email" name="email" type="email" [(ngModel)]="profile.email" [disabled]="loading()" />
+    </div>
+
+    <div class="profile-actions">
+      <p-button
+        [label]="'profile.changePassword' | translate"
+        icon="pi pi-key"
+        severity="secondary"
+        [outlined]="true"
+        type="button"
+        (onClick)="changePassword()"
+      />
+      <p-button
+        [label]="'common.save' | translate"
+        icon="pi pi-check"
+        type="submit"
+        [loading]="saving()"
+        [disabled]="loading()"
+      />
+    </div>
+  </form>
+</p-card>
