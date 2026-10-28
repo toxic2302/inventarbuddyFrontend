@@ -1,0 +1,145 @@
+<div class="flex flex-col gap-6">
+  <header>
+    <h1 class="m-0 mb-1 text-3xl font-semibold text-surface-900 dark:text-surface-0">
+      {{ 'dashboard.title' | translate }}
+    </h1>
+    @if (auth.username) {
+      <p class="m-0 text-surface-500 dark:text-surface-400">
+        {{ 'dashboard.welcome' | translate: {name: auth.username} }}
+      </p>
+    }
+  </header>
+
+  <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+    <a
+      routerLink="/items"
+      class="block rounded-2xl bg-surface-0 p-5 text-inherit no-underline shadow-sm transition-shadow hover:shadow-md dark:bg-surface-900"
+    >
+      <div class="flex justify-between gap-4">
+        <div class="flex flex-col gap-2">
+          <span
+            class="font-normal leading-tight text-surface-700 dark:text-surface-300">{{ 'dashboard.items.label' | translate }}</span>
+          @if (loading()) {
+            <p-skeleton class="block" width="4rem" height="2rem"/>
+          } @else {
+            <div
+              class="text-2xl! leading-tight! font-semibold text-surface-900 dark:text-surface-0">{{ stats().items.value ?? '–' }}
+            </div>
+          }
+        </div>
+        <div
+          class="flex h-10 w-10 items-center justify-center rounded-lg bg-linear-to-b from-cyan-400 to-cyan-600 dark:from-cyan-300 dark:to-cyan-500">
+          <i class="pi pi-box text-xl! leading-none! text-surface-0 dark:text-surface-900"></i>
+        </div>
+      </div>
+      <div class="mt-4">
+        @if (loading()) {
+          <p-skeleton class="block" width="70%" height="1rem"/>
+        } @else {
+          <span
+            class="font-medium leading-tight text-surface-600 dark:text-surface-300">{{ 'dashboard.items.available' | translate: {count: stats().items.available} }}</span>
+          <span class="leading-tight text-surface-500 dark:text-surface-300">
+            · {{ 'dashboard.items.sold' | translate: {count: stats().items.sold} }} ·
+            {{ 'dashboard.items.quantity' | translate: {count: stats().items.quantity} }}
+          </span>
+        }
+      </div>
+    </a>
+
+    <a
+      routerLink="/categories"
+      class="block rounded-2xl bg-surface-0 p-5 text-inherit no-underline shadow-sm transition-shadow hover:shadow-md dark:bg-surface-900"
+    >
+      <div class="flex justify-between gap-4">
+        <div class="flex flex-col gap-2">
+          <span
+            class="font-normal leading-tight text-surface-700 dark:text-surface-300">{{ 'dashboard.categories.label' | translate }}</span>
+          @if (loading()) {
+            <p-skeleton class="block" width="4rem" height="2rem"/>
+          } @else {
+            <div
+              class="text-2xl! leading-tight! font-semibold text-surface-900 dark:text-surface-0">{{ stats().categories.value ?? '–' }}
+            </div>
+          }
+        </div>
+        <div
+          class="flex h-10 w-10 items-center justify-center rounded-lg bg-linear-to-b from-orange-400 to-orange-600 dark:from-orange-300 dark:to-orange-500">
+          <i class="pi pi-tags text-xl! leading-none! text-surface-0 dark:text-surface-900"></i>
+        </div>
+      </div>
+      <div class="mt-4">
+        @if (loading()) {
+          <p-skeleton class="block" width="70%" height="1rem"/>
+        } @else {
+          <span
+            class="font-medium leading-tight text-surface-600 dark:text-surface-300">{{ 'dashboard.topLevel' | translate: {count: stats().categories.topLevel} }}</span>
+        }
+      </div>
+    </a>
+
+    <a
+      routerLink="/storages"
+      class="block rounded-2xl bg-surface-0 p-5 text-inherit no-underline shadow-sm transition-shadow hover:shadow-md dark:bg-surface-900"
+    >
+      <div class="flex justify-between gap-4">
+        <div class="flex flex-col gap-2">
+          <span
+            class="font-normal leading-tight text-surface-700 dark:text-surface-300">{{ 'dashboard.storages.label' | translate }}</span>
+          @if (loading()) {
+            <p-skeleton class="block" width="4rem" height="2rem"/>
+          } @else {
+            <div
+              class="text-2xl! leading-tight! font-semibold text-surface-900 dark:text-surface-0">{{ stats().storages.value ?? '–' }}
+            </div>
+          }
+        </div>
+        <div
+          class="flex h-10 w-10 items-center justify-center rounded-lg bg-linear-to-b from-slate-400 to-slate-600 dark:from-slate-300 dark:to-slate-500">
+          <i class="pi pi-warehouse text-xl! leading-none! text-surface-0 dark:text-surface-900"></i>
+        </div>
+      </div>
+      <div class="mt-4">
+        @if (loading()) {
+          <p-skeleton class="block" width="70%" height="1rem"/>
+        } @else {
+          <span
+            class="font-medium leading-tight text-surface-600 dark:text-surface-300">{{ 'dashboard.topLevel' | translate: {count: stats().storages.topLevel} }}</span>
+        }
+      </div>
+    </a>
+
+    <a
+      routerLink="/media"
+      class="block rounded-2xl bg-surface-0 p-5 text-inherit no-underline shadow-sm transition-shadow hover:shadow-md dark:bg-surface-900"
+    >
+      <div class="flex justify-between gap-4">
+        <div class="flex flex-col gap-2">
+          <span
+            class="font-normal leading-tight text-surface-700 dark:text-surface-300">{{ 'dashboard.media.label' | translate }}</span>
+          @if (loading()) {
+            <p-skeleton class="block" width="4rem" height="2rem"/>
+          } @else {
+            <div
+              class="text-2xl! leading-tight! font-semibold text-surface-900 dark:text-surface-0">{{ stats().media.value ?? '–' }}
+            </div>
+          }
+        </div>
+        <div
+          class="flex h-10 w-10 items-center justify-center rounded-lg bg-linear-to-b from-violet-400 to-violet-600 dark:from-violet-300 dark:to-violet-500">
+          <i class="pi pi-images text-xl! leading-none! text-surface-0 dark:text-surface-900"></i>
+        </div>
+      </div>
+      <div class="mt-4">
+        @if (loading()) {
+          <p-skeleton class="block" width="70%" height="1rem"/>
+        } @else {
+          <span class="font-medium leading-tight text-surface-600 dark:text-surface-300">{{ stats().media.size }}</span>
+          <span class="leading-tight text-surface-500 dark:text-surface-300">
+            · {{ 'dashboard.media.images' | translate: {count: stats().media.images} }} ·
+            {{ 'dashboard.media.pdfs' | translate: {count: stats().media.pdfs} }}
+          </span>
+        }
+      </div>
+    </a>
+  </div>
+</div>

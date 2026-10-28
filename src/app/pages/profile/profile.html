@@ -1,0 +1,58 @@
+<div class="mb-4 flex items-center justify-between">
+  <h1 class="m-0 text-3xl font-semibold text-surface-900 dark:text-surface-0">{{ 'profile.title' | translate }}</h1>
+</div>
+
+<div class="rounded-2xl bg-surface-0 p-6 shadow-sm dark:bg-surface-900">
+  <form class="flex max-w-lg flex-col gap-4" (ngSubmit)="save()">
+    <div class="flex flex-col gap-1.5">
+      <label for="username">{{ 'profile.username' | translate }}</label>
+      @if (loading()) {
+        <p-skeleton class="block" height="2.5rem"/>
+      } @else {
+        <input pInputText id="username" name="username" [(ngModel)]="profile.username" [disabled]="loading()"/>
+      }
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label for="firstName">{{ 'profile.firstName' | translate }}</label>
+      @if (loading()) {
+        <p-skeleton class="block" height="2.5rem"/>
+      } @else {
+        <input pInputText id="firstName" name="firstName" [(ngModel)]="profile.firstName" [disabled]="loading()"/>
+      }
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label for="lastName">{{ 'profile.lastName' | translate }}</label>
+      @if (loading()) {
+        <p-skeleton class="block" height="2.5rem"/>
+      } @else {
+        <input pInputText id="lastName" name="lastName" [(ngModel)]="profile.lastName" [disabled]="loading()"/>
+      }
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <label for="email">{{ 'profile.email' | translate }}</label>
+      @if (loading()) {
+        <p-skeleton class="block" height="2.5rem"/>
+      } @else {
+        <input pInputText id="email" name="email" type="email" [(ngModel)]="profile.email" [disabled]="loading()"/>
+      }
+    </div>
+
+    <div class="mt-2 flex justify-between gap-3">
+      <p-button
+        [label]="'profile.changePassword' | translate"
+        icon="pi pi-key"
+        severity="secondary"
+        [outlined]="true"
+        type="button"
+        (onClick)="changePassword()"
+      />
+      <p-button
+        [label]="'common.save' | translate"
+        icon="pi pi-check"
+        type="submit"
+        [loading]="saving()"
+        [disabled]="loading()"
+      />
+    </div>
+  </form>
+</div>

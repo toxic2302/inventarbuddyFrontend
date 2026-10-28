@@ -1,0 +1,168 @@
+{
+  "common": {
+    "new": "Neu",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "success": "Erfolg",
+    "error": "Fehler",
+    "saved": "Gespeichert",
+    "deleted": "Gelöscht",
+    "uploaded": "Datei hochgeladen",
+    "loadFailed": "Daten konnten nicht geladen werden",
+    "saveFailed": "Speichern fehlgeschlagen",
+    "deleteFailed": "Löschen fehlgeschlagen",
+    "uploadFailed": "Upload fehlgeschlagen",
+    "confirmDelete": "„{{name}}“ wirklich löschen?",
+    "name": "Name",
+    "nameRequired": "Name *",
+    "description": "Beschreibung",
+    "uploadFile": "Datei hochladen"
+  },
+  "nav": {
+    "inventory": "Inventar",
+    "items": "Gegenstände",
+    "categories": "Kategorien",
+    "storages": "Lagerorte",
+    "media": "Medien",
+    "logout": "Abmelden",
+    "editProfile": "Profil bearbeiten",
+    "language": "Sprache",
+    "dashboard": "Dashboard"
+  },
+  "language": {
+    "en": "Englisch",
+    "de": "Deutsch"
+  },
+  "landing": {
+    "login": "Anmelden",
+    "loginNow": "Jetzt anmelden",
+    "toApp": "Zur App",
+    "heroTitle": "Behalte den Überblick über dein Inventar",
+    "heroText": "InventarBuddy hilft dir, Gegenstände, Kategorien, Lagerorte und zugehörige Dokumente an einem Ort zu verwalten.",
+    "features": {
+      "items": {
+        "title": "Gegenstände",
+        "text": "Erfasse deine Dinge mit Seriennummer, Modell, Hersteller und Stückzahl."
+      },
+      "categories": {
+        "title": "Kategorien",
+        "text": "Ordne deinen Bestand in beliebig verschachtelten Kategorien."
+      },
+      "storages": {
+        "title": "Lagerorte",
+        "text": "Behalte im Blick, wo sich welcher Gegenstand befindet."
+      },
+      "media": {
+        "title": "Medien",
+        "text": "Hänge Fotos und PDFs wie Rechnungen oder Handbücher an."
+      }
+    }
+  },
+  "items": {
+    "title": "Gegenstände",
+    "searchPlaceholder": "Suchen…",
+    "sold": "Verkauft",
+    "available": "Vorhanden",
+    "noCategory": "Ohne Kategorie",
+    "empty": "Keine Gegenstände vorhanden.",
+    "createTitle": "Gegenstand anlegen",
+    "editTitle": "Gegenstand bearbeiten",
+    "manufacturer": "Hersteller",
+    "modelNumber": "Modellnummer",
+    "serialNumber": "Seriennummer",
+    "quantity": "Menge",
+    "category": "Kategorie",
+    "storage": "Lagerort",
+    "categoryPlaceholder": "Keine",
+    "storagePlaceholder": "Keiner",
+    "soldLabel": "Verkauft",
+    "files": "Dateien",
+    "noFiles": "Keine Dateien vorhanden.",
+    "filesAfterSave": "Dateien können nach dem ersten Speichern hinzugefügt werden.",
+    "serialShort": "SN {{value}}",
+    "sort": {
+      "name": "Name",
+      "manufacturer": "Hersteller",
+      "model": "Modell",
+      "serial": "Seriennr.",
+      "quantity": "Menge"
+    }
+  },
+  "tree": {
+    "empty": "Keine Einträge vorhanden.",
+    "createChild": "Unterelement anlegen",
+    "createTitle": "Neu anlegen",
+    "editTitle": "Bearbeiten",
+    "parent": "Übergeordnet",
+    "parentPlaceholder": "Keine (oberste Ebene)"
+  },
+  "categories": {
+    "title": "Kategorien"
+  },
+  "storages": {
+    "title": "Lagerorte"
+  },
+  "media": {
+    "title": "Medien",
+    "fileName": "Dateiname",
+    "fileNameRequired": "Dateiname *",
+    "type": "Typ",
+    "size": "Größe",
+    "item": "Gegenstand",
+    "itemPlaceholder": "Keiner",
+    "empty": "Keine Medien vorhanden.",
+    "editTitle": "Medium bearbeiten"
+  },
+  "profile": {
+    "title": "Mein Profil",
+    "username": "Benutzername",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail",
+    "changePassword": "Passwort ändern",
+    "saved": "Profil gespeichert",
+    "loadFailed": "Profil konnte nicht geladen werden",
+    "saveFailed": "Profil konnte nicht gespeichert werden"
+  },
+  "primeng": {
+    "accept": "Ja",
+    "reject": "Nein",
+    "choose": "Auswählen",
+    "upload": "Hochladen",
+    "cancel": "Abbrechen",
+    "clear": "Zurücksetzen",
+    "apply": "Anwenden",
+    "emptyMessage": "Keine Ergebnisse gefunden",
+    "emptyFilterMessage": "Keine Ergebnisse gefunden",
+    "searchMessage": "{0} Ergebnisse verfügbar",
+    "selectionMessage": "{0} Elemente ausgewählt",
+    "emptySelectionMessage": "Kein Element ausgewählt",
+    "emptySearchMessage": "Keine Ergebnisse gefunden",
+    "fileChosenMessage": "{0} Dateien",
+    "noFileChosenMessage": "Keine Datei ausgewählt"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Willkommen zurück, {{name}}!",
+    "topLevel": "{{count}} auf oberster Ebene",
+    "items": {
+      "label": "Gegenstände",
+      "available": "{{count}} vorhanden",
+      "sold": "{{count}} verkauft",
+      "quantity": "{{count}} Stück gesamt"
+    },
+    "categories": {
+      "label": "Kategorien"
+    },
+    "storages": {
+      "label": "Lagerorte"
+    },
+    "media": {
+      "label": "Medien",
+      "images": "{{count}} Bilder",
+      "pdfs": "{{count}} PDFs"
+    }
+  }
+}
